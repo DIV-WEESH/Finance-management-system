@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Personal Finance Manager</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #fff;
+            background: linear-gradient(to right, #6dd5ed, #025050);
+        }
+        .register-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+        .register-box h2 {
+            font-size: 26px;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            color: #333;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            outline: none;
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+        .input-group small {
+            color: red;
+            display: none; /* Initially hidden */
+        }
+        button.register-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #163695;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        button.register-btn:hover {
+            background-color: #1cc88a;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="register-box">
+        <h2>Let's Get Started!</h2>
+
+        <form id="registerForm" method="POST" action="save_register.php">
+            <div class="input-group">
+                <input type="text" id="phone-number" name="phone" placeholder="Phone Number" required>
+                <small id="error-message">Please enter a valid phone number.</small>
+            </div>
+            <div class="input-group">
+                <input type="text" id="password" name="password" placeholder="Password" required>
+            </div>
+            <button type="submit" class="register-btn">Sign Up</button>
+        </form>
+    </div>
+</body>
+<script>
+    // Function to validate phone number
+    function validatePhoneNumber(phoneNumber) {
+        // Define a regular expression for validation
+        const phoneRegex = /^(\+?[1-9]\d{0,3})?(\s)?\d{10}$/;
+
+        // Test the phone number against the regex
+        return phoneRegex.test(phoneNumber);
+    }
+
+    // Get the form, input, and error message elements
+    const phoneInput = document.getElementById("phone-number");
+    const form = document.getElementById("registerForm");
+    const errorMessage = document.getElementById("error-message");
+
+    // Add event listener for form submission
+    form.addEventListener("submit", (e) => {
+        e.preventDefault(); // Prevent form submission
+
+        const phoneNumber = phoneInput.value.trim(); // Get the entered phone number
+
+        if (validatePhoneNumber(phoneNumber)) {
+            errorMessage.style.display = "none"; // Hide error message
+            alert("Sign up successful!");
+            form.submit(); // Proceed with form submission
+        } else {
+            errorMessage.style.display = "block"; // Show error message
+            phoneInput.focus(); // Focus back on the input
+        }
+    });
+
+    // Optional: Live validation as the user types
+    phoneInput.addEventListener("input", () => {
+        const phoneNumber = phoneInput.value.trim();
+        if (validatePhoneNumber(phoneNumber)) {
+            errorMessage.style.display = "none"; // Hide error message
+        }
+    });
+</script>
+</html>
